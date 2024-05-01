@@ -144,11 +144,14 @@ public class GameFrame extends JFrame {
 					break;
 				case KeyEvent.VK_SPACE:
 					// 1. 스페이스를 눌렀을 때 적군을 멈출 수 있도록 코드 수정
-					if (flag == true) {
+					if (flag) {
 						flag = false;
 						System.out.println(flag);
-					} else if (flag == false) {
+					} else {
 						flag = true;
+						thread.interrupt();
+						Thread thread = new Thread(imagePanel);
+				        thread.start();
 						System.out.println(flag);
 					}
 				default:
