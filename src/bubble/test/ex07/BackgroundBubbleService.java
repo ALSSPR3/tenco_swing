@@ -30,7 +30,7 @@ public class BackgroundBubbleService implements Runnable {
 			Color bubbleColorLeft = new Color(image.getRGB(bubble.getX() + 10, bubble.getY() + 25));
 			Color bubbleColorRight = new Color(image.getRGB(bubble.getX() + 50 + 10, bubble.getY() + 25));
 			System.out.println(bubbleColorRight);
-			
+
 			// 왼쪽에 충돌함
 			if (bubbleColorLeft.getRed() == 255 && bubbleColorLeft.getGreen() == 0 && bubbleColorLeft.getBlue() == 0) {
 				// System.out.println("왼쪽벽에 충돌 함.");

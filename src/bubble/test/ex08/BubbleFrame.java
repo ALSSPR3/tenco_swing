@@ -1,4 +1,4 @@
-package bubble.test.ex07;
+package bubble.test.ex08;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -27,8 +27,8 @@ public class BubbleFrame extends JFrame {
 
 	private void initData() {
 		// todo 이미지 변경
-		backgroundMap = new JLabel(new ImageIcon("Img/backgroundMap.png"));
-		// backgroundMap = new JLabel(new ImageIcon("Img/backgroundMapService.png"));
+		// backgroundMap = new JLabel(new ImageIcon("Img/backgroundMap.png"));
+		backgroundMap = new JLabel(new ImageIcon("Img/backgroundMapService.png"));
 		// backgroundMap = new JLabel(new ImageIcon("Img/test.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Frame --> root Panel
@@ -76,13 +76,7 @@ public class BubbleFrame extends JFrame {
 					}
 					break;
 				case KeyEvent.VK_SPACE:
-					Bubble bubble = new Bubble(player);
 					add(new Bubble(player));
-					if (!bubble.isLeft() && !bubble.isBubbleLeftWallCrash()) {
-						new Thread(new BackgroundBubbleService(bubble)).start();						
-					} else if(!bubble.isRight() && !bubble.isBubbleRightWallCrash()) {
-						new Thread(new BackgroundBubbleService(bubble)).start();
-					}
 					break;
 				default:
 					break;
