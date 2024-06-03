@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -17,7 +18,7 @@ public class BackgroundEnemyService implements Runnable {
 
 	private BufferedImage image;
 	private Enemy enemy;
-	
+	private int jump;
 
 	// 생성자 의존 주입 DI
 	public BackgroundEnemyService(Enemy enemy) {
@@ -26,7 +27,6 @@ public class BackgroundEnemyService implements Runnable {
 		try {
 			image = ImageIO.read(new File("Img/backgroundMapService.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -65,7 +65,6 @@ public class BackgroundEnemyService implements Runnable {
 				enemy.setLeftWallCrash(true);
 				enemy.setLeft(false);
 				enemy.setRight(true);
-				System.out.println(enemy.isRight());
 				// 오른쪽에 충돌함
 			} else if (rightColor.getRed() == 255 && rightColor.getGreen() == 0 && rightColor.getBlue() == 0) {
 				System.out.println("오른쪽벽에 충돌 함");
@@ -84,9 +83,19 @@ public class BackgroundEnemyService implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			enemy.setJump(jump()); 
 		}
-
 	}
 
+	private boolean jump() {
+		Random jump = new Random();
+
+		if (jump.nextInt(2) == 0) {
+			enemy.setJump(true);
+			return enemy.isJump();
+		} else {
+			enemy.setJump(false);
+			return enemy.isJump();
+		}
+	}
 }

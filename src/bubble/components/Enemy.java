@@ -1,5 +1,7 @@
 package bubble.components;
 
+import java.util.Random;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -24,6 +26,7 @@ public class Enemy extends JLabel implements Moveable {
 	private boolean right;
 	private boolean up;
 	private boolean down;
+	private boolean jump;
 
 	// 벽에 충돌한 상태
 	private boolean leftWallCrash;
@@ -32,6 +35,7 @@ public class Enemy extends JLabel implements Moveable {
 	// 적군 속도 상태
 	private final int SPEED = 3;
 	private final int JUMPSPEED = 1;
+	private final int JUMP_HEIGHT = 150;
 
 	// enum 타입의 활용
 	private EnemyWay enemyWay;
@@ -41,10 +45,10 @@ public class Enemy extends JLabel implements Moveable {
 		initData();
 		setInitLayout();
 		new Thread(new BackgroundEnemyService(this)).start();
-		
+
 		left();
 	}
-	
+
 	public boolean isLeft() {
 		return left;
 	}
@@ -101,6 +105,14 @@ public class Enemy extends JLabel implements Moveable {
 		this.state = state;
 	}
 
+	public boolean isJump() {
+		return jump;
+	}
+
+	public void setJump(boolean jump) {
+		this.jump = jump;
+	}
+
 	private void initData() {
 		EnemyR = new ImageIcon("Img/enemyR.png");
 		EnemyL = new ImageIcon("Img/enemyL.png");
@@ -122,6 +134,8 @@ public class Enemy extends JLabel implements Moveable {
 		rightWallCrash = false;
 
 		enemyWay = EnemyWay.LEFT;
+
+		jump = false;
 	}
 
 	private void setInitLayout() {
@@ -178,23 +192,23 @@ public class Enemy extends JLabel implements Moveable {
 	@Override
 	public void up() {
 		// System.out.println("점프");
-		up = true;
 		new Thread(new Runnable() {
-
 			@Override
 			public void run() {
-				for (int i = 0; i < 150 / JUMPSPEED; i++) {
-					y -= JUMPSPEED;
-					setLocation(x, y);
-					try {
-						Thread.sleep(5);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+				if (jump) {
+					for (int i = 0; i < JUMP_HEIGHT / JUMPSPEED; i++) {
+						y -= JUMPSPEED;
+						setLocation(x, y);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
+					// 객체의 상태값을 잘 조절해야 한다.
+					up = false;
+					down();
 				}
-				// 객체의 상태값을 잘 조절해야 한다.
-				up = false;
-				down();
 			}
 		}).start();
 	}
